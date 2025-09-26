@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday 🎉</title>
+  <style>
+    :root{
+      --bg1:#ff9a9e; --bg2:#fad0c4; --card:#ffffff; --accent:#ff6b81;
+      --shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,var(--bg1),var(--bg2));font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    .card{width:100%;max-width:720px;background:linear-gradient(180deg,rgba(255,255,255,0.95),#fff);border-radius:20px;padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    h1{margin:0 0 8px;font-size:2.2rem;color:#333}
+    p.lead{margin:0 0 18px;color:#555}
+    .hero{display:flex;gap:20px;align-items:center}
+    .avatar{width:128px;height:128px;border-radius:16px;background:linear-gradient(135deg,#fff3,#fff5);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--accent);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+    .meta{flex:1}
+    .btn{display:inline-block;padding:10px 16px;border-radius:12px;background:var(--accent);color:white;text-decoration:none;font-weight:600;box-shadow:0 6px 16px rgba(255,107,129,0.25);border:none;cursor:pointer}
+    .small{font-size:0.9rem;color:#666}
+    .hearts{position:absolute;right:-40px;top:-40px;opacity:0.12;font-size:240px;transform:rotate(-15deg);pointer-events:none}
+
+    /* balloons */
+    .balloon{position:absolute;bottom:-120px;width:56px;height:72px;border-radius:28px;opacity:0.95}
+    .balloon::after{content:'';position:absolute;left:50%;top:100%;width:2px;height:28px;background:rgba(0,0,0,0.08);transform:translateX(-50%)}
+    .b1{left:8%;background:linear-gradient(180deg,#ffe3e8,#ffb6c1);animation:float1 6s ease-in-out infinite}
+    .b2{left:28%;background:linear-gradient(180deg,#fff3b0,#ffd27a);animation:float2 7s ease-in-out infinite}
+    .b3{left:52%;background:linear-gradient(180deg,#c8f7ff,#8ed1ff);animation:float3 6.5s ease-in-out infinite}
+    .b4{left:78%;background:linear-gradient(180deg,#e6d9ff,#caa2ff);animation:float4 8s ease-in-out infinite}
+    @keyframes float1{0%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-40px) rotate(6deg)}100%{transform:translateY(0) rotate(-6deg)}}
+    @keyframes float2{0%{transform:translateY(0) rotate(4deg)}50%{transform:translateY(-56px) rotate(-4deg)}100%{transform:translateY(0) rotate(4deg)}}
+    @keyframes float3{0%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-48px) rotate(3deg)}100%{transform:translateY(0) rotate(-3deg)}}
+    @keyframes float4{0%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-64px) rotate(-2deg)}100%{transform:translateY(0) rotate(2deg)}}
+
+    /* confetti pieces */
+    .confetti{position:absolute;inset:0;pointer-events:none}
+    .confetti span{position:absolute;width:10px;height:16px;border-radius:2px;opacity:0.95}
+
+    /* responsive */
+    @media (max-width:560px){.hero{flex-direction:row}.avatar{width:96px;height:96px;font-size:36px}}
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="hearts">❤❤❤</div>
+
+    <div class="hero">
+      <div class="avatar" id="avatar">❤</div>
+      <div class="meta">
+        <h1 id="title">Happy Birthday, <span id="name">Her Name</span>! 🎉</h1>
+        <p class="lead" id="message">Wishing you all the love, laughter, and cake today — you deserve the world. Love you so much!</p>
+        <div style="margin-top:12px">
+          <button class="btn" id="confettiBtn" style="background:#6b5bff;margin-left:8px">Throw Confetti</button>
+        </div>
+        <p class="small" style="margin-top:14px">From: <strong id="from">Your Love</strong></p>
+      </div>
+    </div>
+
+    <!-- decorative balloons -->
+    <div class="balloon b1"></div>
+    <div class="balloon b2"></div>
+    <div class="balloon b3"></div>
+    <div class="balloon b4"></div>
+
+    <!-- confetti layer -->
+    <div class="confetti" id="confetti"></div>
+  </div>
+
+  <audio id="audio" src="" preload="auto"></audio>
+
+  <script>
+    // --- Edit these to personalize ---
+    const GIRLFRIEND_NAME = 'Chebukani Raysa Nfaninyama';
+    const FROM_NAME = 'Vincent';
+    const CUSTOM_MESSAGE = `Happy Birthday, ${GIRLFRIEND_NAME}! You light up my life every day — here's to more laughs, big dreams, and forever with you.`;
+
+    // apply personalization
+    document.getElementById('name').textContent = GIRLFRIEND_NAME;
+    document.getElementById('from').textContent = FROM_NAME;
+    document.getElementById('message').textContent = CUSTOM_MESSAGE;
+    document.getElementById('avatar').textContent = GIRLFRIEND_NAME.charAt(0).toUpperCase();
+
+    // confetti generator (simple)
+    function throwConfetti(amount = 40){
+      const area = document.getElementById('confetti');
+      for(let i=0;i<amount;i++){
+        const el = document.createElement('span');
+        const colors = ['#ff6b81','#ffd166','#8ed1ff','#caa2ff','#7ef7c7'];
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.left = Math.random()*100 + '%';
+        el.style.top = Math.random()*20 + '%';
+        el.style.transform = `rotate(${Math.random()*360}deg)`;
+        el.style.width = (6+Math.random()*10)+'px';
+        el.style.height = (8+Math.random()*12)+'px';
+        el.style.opacity = 0.95;
+        el.style.transition = 'transform 2500ms ease-out, top 2500ms ease-out, opacity 900ms';
+        area.appendChild(el);
+        // animate falling
+        requestAnimationFrame(()=>{
+          el.style.top = (60+Math.random()*40) + '%';
+          el.style.transform = `translateY(120px) rotate(${Math.random()*720}deg)`;
+        });
+        // remove after animation
+        setTimeout(()=> el.remove(), 3000+Math.random()*1000);
+      }
+    }
+
+    // balloon entrance (subtle)
+    window.addEventListener('load',()=>{
+      // small automatic confetti once
+      setTimeout(()=>throwConfetti(24),700);
+    });
+
+    document.getElementById('confettiBtn').addEventListener('click',()=>throwConfetti(60));
+
+    // play / pause surprise music
+    const surpriseBtn = document.getElementById('surpriseBtn');
+    surpriseBtn.addEventListener('click',()=>{
+      if(!audio.src){
+        alert('No song set. To add a song, edit the SONG_URL variable in the HTML and paste a direct MP3 link.');
+        return;
+      }
+
+    // small keyboard shortcut: press C to confetti
+    document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='c') throwConfetti(80)});
+
+    // make card clickable: click to toggle a little scale effect
+    const card = document.getElementById('card');
+    card.addEventListener('click', ()=>{
+      card.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:420,iterations:1});
+      throwConfetti(16);
+    });
+  </script>
+</body>
+</html>
