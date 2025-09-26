@@ -17,7 +17,7 @@
     .hero{display:flex;gap:20px;align-items:center}
     .avatar{width:128px;height:128px;border-radius:16px;background:linear-gradient(135deg,#fff3,#fff5);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--accent);box-shadow:0 6px 18px rgba(0,0,0,0.08)}
     .meta{flex:1}
-    .btn{display:inline-block;padding:10px 16px;border-radius:12px;background:var(--accent);color:white;text-decoration:none;font-weight:600;box-shadow:0 6px 16px rgba(255,107,129,0.25);border:none;cursor:pointer}
+    .btn{display:inline-block;padding:10px 16px;border-radius:12px;background:#6b5bff;color:white;text-decoration:none;font-weight:600;box-shadow:0 6px 16px rgba(107,91,255,0.25);border:none;cursor:pointer}
     .small{font-size:0.9rem;color:#666}
     .hearts{position:absolute;right:-40px;top:-40px;opacity:0.12;font-size:240px;transform:rotate(-15deg);pointer-events:none}
 
@@ -48,10 +48,10 @@
     <div class="hero">
       <div class="avatar" id="avatar">❤</div>
       <div class="meta">
-        <h1 id="title">Happy Birthday, <span id="name">Chebukani Raysa Nfaninyama</span>! 🎉</h1>
-        <p class="lead" id="message">Wishing you all the love, laughter, and cake today — you deserve the world. Love you so much!</p>
+        <h1 id="title">Happy Birthday, <span id="name">Raysa</span>! 🎉</h1>
+        <p class="lead" id="message">Happy Birthday, Raysa! You light up my life every day — here's to more laughs, big dreams, and forever with you.</p>
         <div style="margin-top:12px">
-          <button class="btn" id="confettiBtn" style="background:#6b5bff;margin-left:8px">Throw Confetti</button>
+          <button class="btn" id="confettiBtn">Throw Confetti</button>
         </div>
         <p class="small" style="margin-top:14px">From: <strong id="from">Vincent</strong></p>
       </div>
@@ -67,20 +67,7 @@
     <div class="confetti" id="confetti"></div>
   </div>
 
-  <audio id="audio" src="" preload="auto"></audio>
-
   <script>
-    // --- Edit these to personalize ---
-    const GIRLFRIEND_NAME = 'Chebukani Raysa Nfaninyama';
-    const FROM_NAME = 'Vincent';
-    const CUSTOM_MESSAGE = `Happy Birthday, ${GIRLFRIEND_NAME}! You light up my life every day — here's to more laughs, big dreams, and forever with you.`;
-
-    // apply personalization
-    document.getElementById('name').textContent = GIRLFRIEND_NAME;
-    document.getElementById('from').textContent = FROM_NAME;
-    document.getElementById('message').textContent = CUSTOM_MESSAGE;
-    document.getElementById('avatar').textContent = GIRLFRIEND_NAME.charAt(0).toUpperCase();
-
     // confetti generator (simple)
     function throwConfetti(amount = 40){
       const area = document.getElementById('confetti');
@@ -106,26 +93,12 @@
       }
     }
 
-    // balloon entrance (subtle)
     window.addEventListener('load',()=>{
-      // small automatic confetti once
       setTimeout(()=>throwConfetti(24),700);
     });
 
     document.getElementById('confettiBtn').addEventListener('click',()=>throwConfetti(60));
 
-    // play / pause surprise music
-    const surpriseBtn = document.getElementById('surpriseBtn');
-    surpriseBtn.addEventListener('click',()=>{
-      if(!audio.src){
-        alert('No song set. To add a song, edit the SONG_URL variable in the HTML and paste a direct MP3 link.');
-        return;
-      }
-
-    // small keyboard shortcut: press C to confetti
-    document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='c') throwConfetti(80)});
-
-    // make card clickable: click to toggle a little scale effect
     const card = document.getElementById('card');
     card.addEventListener('click', ()=>{
       card.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:420,iterations:1});
